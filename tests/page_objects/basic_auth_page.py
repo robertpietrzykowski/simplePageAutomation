@@ -13,18 +13,22 @@ class BasicAuthSelectors:
     failed_login_msg = 'loginFormMessage'
 
 
-def fill_field(driver_instance, elem, value):
+def fill_auth_data_field(driver_instance, elem, value):
     field = driver_instance.find_element_by_id(elem)
     wait_for_visibility_of_element(driver_instance, By.ID, elem, 2)
     field.click()
     field.send_keys(value)
 
 
-def login_success(driver_instance, username, password):
-    fill_field(driver_instance, BasicAuthSelectors.username, username)
-    fill_field(driver_instance, BasicAuthSelectors.password, password)
+def click_login_btn(driver_instance):
     login_btn = driver_instance.find_element_by_xpath(BasicAuthSelectors.login_btn)
     login_btn.click()
+
+
+def login_success(driver_instance, username, password):
+    fill_auth_data_field(driver_instance, BasicAuthSelectors.username, username)
+    fill_auth_data_field(driver_instance, BasicAuthSelectors.password, password)
+    click_login_btn(driver_instance)
     login_message = driver_instance.find_element_by_id(BasicAuthSelectors.success_login_msg)
     if login_message.text == 'You are logged in!':
         return True
@@ -33,10 +37,9 @@ def login_success(driver_instance, username, password):
 
 
 def login_failed(driver_instance, username, password):
-    fill_field(driver_instance, BasicAuthSelectors.username, username)
-    fill_field(driver_instance, BasicAuthSelectors.password, password)
-    login_btn = driver_instance.find_element_by_xpath(BasicAuthSelectors.login_btn)
-    login_btn.click()
+    fill_auth_data_field(driver_instance, BasicAuthSelectors.username, username)
+    fill_auth_data_field(driver_instance, BasicAuthSelectors.password, password)
+    click_login_btn(driver_instance)
     login_message = driver_instance.find_element_by_id(BasicAuthSelectors.failed_login_msg)
     if login_message.text == 'Invalid credentials':
         return True

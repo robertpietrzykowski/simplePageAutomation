@@ -85,3 +85,12 @@ class Tests(unittest.TestCase):
         self.assertTrue(support_functions.verify_content_visible(self.driver, BasicAuthSelectors.basic_auth_content))
         self.assertTrue(basic_auth_page.login_failed(self.driver, 'user', 'user'))
 
+    def test12_send_correct_form_data(self):
+        pass
+
+    def test13_send_incorrect_form_data(self):
+        pass
+
+
+if __name__ == '__main__':
+    unittest.main()

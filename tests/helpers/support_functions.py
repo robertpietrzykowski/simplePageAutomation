@@ -5,7 +5,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
-# TODO: FIX REDUNDAND METHOD
+# TODO: FIX REDUNDANT METHOD
 def hover_over_element_by_xpath(driver_instance, xpath):
     elem = driver_instance.find_element_by_xpath(xpath)
     hover = ActionChains(driver_instance).move_to_element(elem)
@@ -42,4 +42,3 @@ def verify_content_visible(driver_instance, content):
     wait_for_visibility_of_element(driver_instance, By.ID, content)
     elem = driver_instance.find_element_by_id(content)
     return elem.is_displayed()
-

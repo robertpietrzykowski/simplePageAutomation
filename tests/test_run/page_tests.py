@@ -5,9 +5,10 @@ from selenium import webdriver
 
 from config.test_settings import TestSettings
 from tests.page_objects import main_page, checkbox_page, hover_page, users_page, input_page, dropdown_page, \
-    add_remove_page
+    add_remove_page, basic_auth_page
 from tests.helpers import support_functions
 from tests.page_objects.add_remove_page import AddRemoveSelectors
+from tests.page_objects.basic_auth_page import BasicAuthSelectors
 from tests.page_objects.checkbox_page import CheckboxSelectors
 from tests.page_objects.date_picker_page import fill_date_picker, DatePickerSelectors
 from tests.page_objects.dropdown_page import DropdownSelectors
@@ -73,4 +74,14 @@ class Tests(unittest.TestCase):
         add_remove_page.add_element(self.driver)
         add_remove_page.delete_element(self.driver)
         self.assertTrue(add_remove_page.element_invisible(self.driver))
+
+    def test10_successful_login(self,):
+        support_functions.click_tab(self.driver, BasicAuthSelectors.basic_auth_header)
+        self.assertTrue(support_functions.verify_content_visible(self.driver, BasicAuthSelectors.basic_auth_content))
+        self.assertTrue(basic_auth_page.login_success(self.driver, 'admin', 'admin'))
+
+    def test11_unsuccessful_login(self,):
+        support_functions.click_tab(self.driver, BasicAuthSelectors.basic_auth_header)
+        self.assertTrue(support_functions.verify_content_visible(self.driver, BasicAuthSelectors.basic_auth_content))
+        self.assertTrue(basic_auth_page.login_failed(self.driver, 'user', 'user'))
 

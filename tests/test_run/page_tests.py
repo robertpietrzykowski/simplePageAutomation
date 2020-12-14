@@ -5,13 +5,14 @@ from selenium import webdriver
 
 from config.test_settings import TestSettings
 from tests.page_objects import main_page, checkbox_page, hover_page, users_page, input_page, dropdown_page, \
-    add_remove_page, basic_auth_page
+    add_remove_page, basic_auth_page, form_page
 from tests.helpers import support_functions
 from tests.page_objects.add_remove_page import AddRemoveSelectors
 from tests.page_objects.basic_auth_page import BasicAuthSelectors
 from tests.page_objects.checkbox_page import CheckboxSelectors
 from tests.page_objects.date_picker_page import fill_date_picker, DatePickerSelectors
 from tests.page_objects.dropdown_page import DropdownSelectors
+from tests.page_objects.form_page import FormSelectors
 from tests.page_objects.hover_page import HoverSelectors
 from tests.page_objects.input_page import InputPage
 
@@ -85,11 +86,20 @@ class Tests(unittest.TestCase):
         self.assertTrue(support_functions.verify_content_visible(self.driver, BasicAuthSelectors.basic_auth_content))
         self.assertTrue(basic_auth_page.login_failed(self.driver, 'user', 'user'))
 
-    def test12_send_correct_form_data(self):
-        pass
+    def test12_send_correct_form(self):
+        support_functions.click_tab(self.driver, FormSelectors.form_header)
+        self.assertTrue(support_functions.verify_content_visible(self.driver, FormSelectors.form_content))
+        form_page.send_form_correct_data(self.driver, "Robert", "Essa")
+        self.assertTrue(form_page.verify_alert_text_success(self.driver))
 
-    def test13_send_incorrect_form_data(self):
-        pass
+    def test13_send_empty_form(self):
+        support_functions.click_tab(self.driver, FormSelectors.form_header)
+        self.assertTrue(support_functions.verify_content_visible(self.driver, FormSelectors.form_content))
+        form_page.send_form_correct_data(self.driver, "", "")
+        self.assertFalse(form_page.verify_empty_field(self.driver, FormSelectors.first_name_field))
+        self.assertFalse(form_page.verify_empty_field(self.driver, FormSelectors.last_name_field))
+
+
 
 
 if __name__ == '__main__':

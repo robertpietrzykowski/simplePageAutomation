@@ -1,11 +1,12 @@
 import unittest
+from time import sleep
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
 from config.test_settings import TestSettings
 from tests.page_objects import main_page, checkbox_page, hover_page, users_page, input_page, dropdown_page, \
-    add_remove_page, basic_auth_page, form_page, key_press_page, status_codes_page
+    add_remove_page, basic_auth_page, form_page, key_press_page, status_codes_page, iframe_page
 from tests.helpers import support_functions
 from tests.page_objects.add_remove_page import AddRemoveSelectors
 from tests.page_objects.basic_auth_page import BasicAuthSelectors
@@ -15,6 +16,7 @@ from tests.page_objects.drag_and_drop import DragAndDropSelectors
 from tests.page_objects.dropdown_page import DropdownSelectors
 from tests.page_objects.form_page import FormSelectors
 from tests.page_objects.hover_page import HoverSelectors
+from tests.page_objects.iframe_page import IframeSelectors
 from tests.page_objects.input_page import InputPage
 from tests.page_objects.key_press_page import KeyPressSelectors
 from tests.page_objects.status_codes_page import StatusCodeSelectors
@@ -115,10 +117,16 @@ class Tests(unittest.TestCase):
         self.assertTrue(
             support_functions.verify_content_visible(self.driver, DragAndDropSelectors.drag_and_drop_content))
 
-    def test16_test_status_codes(self):
+    def test16_check_status_codes(self):
         support_functions.click_tab(self.driver, StatusCodeSelectors.status_codes_header)
         self.assertTrue(support_functions.verify_content_visible(self.driver, StatusCodeSelectors.status_codes_content))
         self.assertTrue(status_codes_page.status_codes_check(self.driver))
+
+    def test17_check_iframes(self):
+        support_functions.click_tab(self.driver, IframeSelectors.iframe_header)
+        self.assertTrue(iframe_page.verify_iframe_visible(self.driver, IframeSelectors.iframe))
+        self.assertTrue(iframe_page.click_iframe_button1(self.driver))
+        self.assertTrue(iframe_page.click_iframe_button2(self.driver))
 
 
 if __name__ == '__main__':

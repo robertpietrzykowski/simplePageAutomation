@@ -1,13 +1,11 @@
 import unittest
-from time import sleep
 
 from selenium import webdriver
-from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 
 from config.test_settings import TestSettings
 from tests.page_objects import main_page, checkbox_page, hover_page, users_page, input_page, dropdown_page, \
-    add_remove_page, basic_auth_page, form_page, key_press_page
+    add_remove_page, basic_auth_page, form_page, key_press_page, status_codes_page
 from tests.helpers import support_functions
 from tests.page_objects.add_remove_page import AddRemoveSelectors
 from tests.page_objects.basic_auth_page import BasicAuthSelectors
@@ -19,6 +17,7 @@ from tests.page_objects.form_page import FormSelectors
 from tests.page_objects.hover_page import HoverSelectors
 from tests.page_objects.input_page import InputPage
 from tests.page_objects.key_press_page import KeyPressSelectors
+from tests.page_objects.status_codes_page import StatusCodeSelectors
 
 
 class Tests(unittest.TestCase):
@@ -70,22 +69,24 @@ class Tests(unittest.TestCase):
 
     def test8_add_element(self):
         support_functions.click_tab(self.driver, AddRemoveSelectors.add_remove_element_header)
-        self.assertTrue(support_functions.verify_content_visible(self.driver, AddRemoveSelectors.add_remove_element_content))
+        self.assertTrue(
+            support_functions.verify_content_visible(self.driver, AddRemoveSelectors.add_remove_element_content))
         add_remove_page.add_element(self.driver)
 
     def test9_delete_element(self):
         support_functions.click_tab(self.driver, AddRemoveSelectors.add_remove_element_header)
-        self.assertTrue(support_functions.verify_content_visible(self.driver, AddRemoveSelectors.add_remove_element_content))
+        self.assertTrue(
+            support_functions.verify_content_visible(self.driver, AddRemoveSelectors.add_remove_element_content))
         add_remove_page.add_element(self.driver)
         add_remove_page.delete_element(self.driver)
         self.assertTrue(add_remove_page.element_invisible(self.driver))
 
-    def test10_successful_login(self,):
+    def test10_successful_login(self, ):
         support_functions.click_tab(self.driver, BasicAuthSelectors.basic_auth_header)
         self.assertTrue(support_functions.verify_content_visible(self.driver, BasicAuthSelectors.basic_auth_content))
         self.assertTrue(basic_auth_page.login_success(self.driver, 'admin', 'admin'))
 
-    def test11_unsuccessful_login(self,):
+    def test11_unsuccessful_login(self, ):
         support_functions.click_tab(self.driver, BasicAuthSelectors.basic_auth_header)
         self.assertTrue(support_functions.verify_content_visible(self.driver, BasicAuthSelectors.basic_auth_content))
         self.assertTrue(basic_auth_page.login_failed(self.driver, 'user', 'user'))
@@ -111,15 +112,13 @@ class Tests(unittest.TestCase):
 
     def test15_drag_and_drop(self):
         support_functions.click_tab(self.driver, DragAndDropSelectors.drag_and_drop_header)
-        self.assertTrue(support_functions.verify_content_visible(self.driver, DragAndDropSelectors.drag_and_drop_content))
-        sleep(2)
+        self.assertTrue(
+            support_functions.verify_content_visible(self.driver, DragAndDropSelectors.drag_and_drop_content))
 
     def test16_test_status_codes(self):
-        support_functions.click_tab(self.driver, DragAndDropSelectors.drag_and_drop_header)
-        self.assertTrue(support_functions.verify_content_visible(self.driver, DragAndDropSelectors.drag_and_drop_content))
-
-
-
+        support_functions.click_tab(self.driver, StatusCodeSelectors.status_codes_header)
+        self.assertTrue(support_functions.verify_content_visible(self.driver, StatusCodeSelectors.status_codes_content))
+        self.assertTrue(status_codes_page.status_codes_check(self.driver))
 
 
 if __name__ == '__main__':

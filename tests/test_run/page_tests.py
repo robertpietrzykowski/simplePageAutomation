@@ -2,19 +2,23 @@ import unittest
 from time import sleep
 
 from selenium import webdriver
+from selenium.webdriver import ActionChains
+from selenium.webdriver.common.keys import Keys
 
 from config.test_settings import TestSettings
 from tests.page_objects import main_page, checkbox_page, hover_page, users_page, input_page, dropdown_page, \
-    add_remove_page, basic_auth_page, form_page
+    add_remove_page, basic_auth_page, form_page, key_press_page
 from tests.helpers import support_functions
 from tests.page_objects.add_remove_page import AddRemoveSelectors
 from tests.page_objects.basic_auth_page import BasicAuthSelectors
 from tests.page_objects.checkbox_page import CheckboxSelectors
 from tests.page_objects.date_picker_page import fill_date_picker, DatePickerSelectors
+from tests.page_objects.drag_and_drop import DragAndDropSelectors
 from tests.page_objects.dropdown_page import DropdownSelectors
 from tests.page_objects.form_page import FormSelectors
 from tests.page_objects.hover_page import HoverSelectors
 from tests.page_objects.input_page import InputPage
+from tests.page_objects.key_press_page import KeyPressSelectors
 
 
 class Tests(unittest.TestCase):
@@ -98,6 +102,22 @@ class Tests(unittest.TestCase):
         form_page.send_form_correct_data(self.driver, "", "")
         self.assertFalse(form_page.verify_empty_field(self.driver, FormSelectors.first_name_field))
         self.assertFalse(form_page.verify_empty_field(self.driver, FormSelectors.last_name_field))
+
+    def test14_send_character(self):
+        support_functions.click_tab(self.driver, KeyPressSelectors.key_press_header)
+        self.assertTrue(support_functions.verify_content_visible(self.driver, KeyPressSelectors.key_press_content))
+        key_press_page.press_key(self.driver, Keys.TAB)
+        self.assertTrue(key_press_page.check_key(self.driver, 'TAB'))
+
+    def test15_drag_and_drop(self):
+        support_functions.click_tab(self.driver, DragAndDropSelectors.drag_and_drop_header)
+        self.assertTrue(support_functions.verify_content_visible(self.driver, DragAndDropSelectors.drag_and_drop_content))
+        sleep(2)
+
+    def test16_test_status_codes(self):
+        support_functions.click_tab(self.driver, DragAndDropSelectors.drag_and_drop_header)
+        self.assertTrue(support_functions.verify_content_visible(self.driver, DragAndDropSelectors.drag_and_drop_content))
+
 
 
 

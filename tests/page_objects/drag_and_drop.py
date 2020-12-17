@@ -1,4 +1,4 @@
-from selenium.webdriver import ActionChains
+import os
 
 
 class DragAndDropSelectors:
@@ -9,8 +9,15 @@ class DragAndDropSelectors:
 
 
 def perform_drag_and_drop(driver_instance):
-    source = driver_instance.find_element_by_id(DragAndDropSelectors.column_a)
-    target = driver_instance.find_element_by_id(DragAndDropSelectors.column_b)
-    action = ActionChains(driver_instance)
-    action.move_to_element(target)
-    action.drag_and_drop(source, target).perform()
+    with open(os.path.abspath('../helpers/drag_and_drop_helper.js'), 'r') as js_file:
+        line = js_file.readline()
+        script = ''
+        while line:
+            script += line
+            line = js_file.readline()
+
+    driver_instance.execute_script(script + "jQuery('#column-a').simulateDragDrop({ dropTarget: '#column-b'});")
+    elem = driver_instance.find_element_by_id(DragAndDropSelectors.column_a)
+    if elem.text == 'B':
+        return True
+    return False

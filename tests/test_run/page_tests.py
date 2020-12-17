@@ -1,13 +1,12 @@
 import unittest
-from time import sleep
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
 from config.test_settings import TestSettings
-from tests.page_objects import main_page, checkbox_page, hover_page, users_page, input_page, dropdown_page, \
-    add_remove_page, basic_auth_page, form_page, key_press_page, status_codes_page, iframe_page
 from tests.helpers import support_functions
+from tests.page_objects import main_page, checkbox_page, hover_page, users_page, input_page, dropdown_page, \
+    add_remove_page, basic_auth_page, form_page, key_press_page, status_codes_page, iframe_page, drag_and_drop
 from tests.page_objects.add_remove_page import AddRemoveSelectors
 from tests.page_objects.basic_auth_page import BasicAuthSelectors
 from tests.page_objects.checkbox_page import CheckboxSelectors
@@ -116,6 +115,7 @@ class Tests(unittest.TestCase):
         support_functions.click_tab(self.driver, DragAndDropSelectors.drag_and_drop_header)
         self.assertTrue(
             support_functions.verify_content_visible(self.driver, DragAndDropSelectors.drag_and_drop_content))
+        self.assertTrue(drag_and_drop.perform_drag_and_drop(self.driver))
 
     def test16_check_status_codes(self):
         support_functions.click_tab(self.driver, StatusCodeSelectors.status_codes_header)

@@ -9,7 +9,9 @@ class DragAndDropSelectors:
 
 
 def perform_drag_and_drop(driver_instance):
-    with open(os.path.abspath('../helpers/drag_and_drop_helper.js'), 'r') as js_file:
+    with open(os.path.abspath(
+            '/Users/rpietrzykowski/PycharmProjects/simplePageAutomation/tests/helpers/drag_and_drop_helper.js'),
+            'r') as js_file:
         line = js_file.readline()
         script = ''
         while line:

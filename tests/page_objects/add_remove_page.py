@@ -11,11 +11,13 @@ class AddRemoveSelectors:
 
 
 def add_element(driver_instance):
+    wait_for_visibility_of_element(driver_instance, By.XPATH, AddRemoveSelectors.new_element)
     elem = driver_instance.find_element_by_xpath(AddRemoveSelectors.new_element)
     elem.click()
 
 
 def delete_element(driver_instance):
+    wait_for_visibility_of_element(driver_instance, By.XPATH, AddRemoveSelectors.new_element)
     elem = driver_instance.find_element_by_xpath(AddRemoveSelectors.added_element)
     elem.click()
     wait_for_visibility_of_element(driver_instance, By.XPATH, AddRemoveSelectors.added_element)

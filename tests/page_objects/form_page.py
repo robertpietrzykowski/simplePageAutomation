@@ -12,6 +12,7 @@ class FormSelectors:
 
 
 def fill_data_field(driver_instance, elem, data):
+    wait_for_visibility_of_element(driver_instance, By.ID, elem)
     elem = driver_instance.find_element_by_id(elem)
     elem.click()
     elem.send_keys(data)

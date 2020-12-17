@@ -23,7 +23,10 @@ from tests.page_objects.status_codes_page import StatusCodeSelectors
 
 class Tests(unittest.TestCase):
     def setUp(self):
-        self.driver = webdriver.Chrome(TestSettings.WEBDRIVER_CHROME_PATH)
+        self.selenium_grid_url = 'http://192.168.0.164:4444/wd/hub'
+        self.capabilites = webdriver.DesiredCapabilities.CHROME.copy()
+        self.driver = webdriver.Remote(desired_capabilities=self.capabilites, command_executor=self.selenium_grid_url)
+        # self.driver = webdriver.Chrome(TestSettings.WEBDRIVER_CHROME_PATH)
         self.url = TestSettings.URL
         self.driver.get(self.url)
         self.driver.maximize_window()
